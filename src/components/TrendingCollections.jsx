@@ -1,9 +1,45 @@
+import cyberPunks from '../assets/public/featured/CyberPunks.png';
+import dreamscape from '../assets/public/featured/Dreamscape.png';
+import blossomGirls from '../assets/public/featured/Blossom Girls.png';
+import neonCity from '../assets/public/featured/NeonCity.png';
+import pixelPals from '../assets/public/featured/Pixel Pals.png';
+
 const collections = [
-  { name: 'CyberPunks', creator: 'ArtBlocks', floor: '2.45', volume: '12.6K', image: 'src/assets/public/featured/CyberPunks.png' },
-  { name: 'Dreamscape', creator: 'Dream Labs', floor: '1.89', volume: '9.8K', image: 'src/assets/public/featured/Dreamscape.png' },
-  { name: 'Blossom Girls', creator: 'Blossom', floor: '1.25', volume: '7.3K', image: 'src/assets/public/featured/Blossom Girls.png' },
-  { name: 'Neon City', creator: 'MetaWorld', floor: '0.95', volume: '5.7K', image: 'src/assets/public/featured/NeonCity.png' },
-  { name: 'Pixel Pals', creator: 'Pixel Studio', floor: '0.75', volume: '4.3K', image: 'src/assets/public/featured/Pixel Pals.png' },
+  {
+    name: 'CyberPunks',
+    creator: 'ArtBlocks',
+    floor: '2.45',
+    volume: '12.6K',
+    image: cyberPunks
+  },
+  {
+    name: 'Dreamscape',
+    creator: 'Dream Labs',
+    floor: '1.89',
+    volume: '9.8K',
+    image: dreamscape
+  },
+  {
+    name: 'Blossom Girls',
+    creator: 'Blossom',
+    floor: '1.25',
+    volume: '7.3K',
+    image: blossomGirls
+  },
+  {
+    name: 'Neon City',
+    creator: 'MetaWorld',
+    floor: '0.95',
+    volume: '5.7K',
+    image: neonCity
+  },
+  {
+    name: 'Pixel Pals',
+    creator: 'Pixel Studio',
+    floor: '0.75',
+    volume: '4.3K',
+    image: pixelPals
+  }
 ];
 
 export default function TrendingCollections() {
