@@ -13,6 +13,10 @@ export default function Topbar({ account, connecting, error, onConnect, isLight,
 
   return (
     <header className="topbar">
+      <Link to="/" className="mobile-brand" aria-label="NFTMart home">
+        <span className="mobile-brand-icon">◆</span>
+        <span>NFTMart</span>
+      </Link>
       <input className="topbar-search" placeholder="Search for NFTs, collections or creators" />
       <nav className="topbar-links">
         <Link to="/explore">Explore</Link>
