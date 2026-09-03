@@ -25,13 +25,22 @@ export default function useWallet() {
     setConnecting(true);
 
     try {
+      // This is the important part for mobile MetaMask
+      const accounts = await MMSDK.connect();
+
+      if (!accounts || accounts.length === 0) {
+        throw new Error('No wallet account found.');
+      }
+
       const ethereum = MMSDK.getProvider();
 
       if (!ethereum) {
-        throw new Error('Unable to connect to MetaMask.');
+        throw new Error('MetaMask provider unavailable.');
       }
 
-      // Make sure MetaMask is using Sepolia
+      const provider = new BrowserProvider(ethereum);
+
+      // Sepolia
       await ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [
@@ -40,17 +49,6 @@ export default function useWallet() {
           },
         ],
       });
-
-      const provider = new BrowserProvider(ethereum);
-
-      const accounts = await provider.send(
-        'eth_requestAccounts',
-        []
-      );
-
-      if (!accounts || accounts.length === 0) {
-        throw new Error('No wallet account found.');
-      }
 
       const signer = await provider.getSigner();
 
