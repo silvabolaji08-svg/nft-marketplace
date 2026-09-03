@@ -3104,24 +3104,33 @@ body.light-theme .explore-card-edition {
   background: var(--surface-2);
 }
 
-/* Mobile stats cards - horizontal swipe */
+/* Stats cards - desktop */
+.stats-scroll {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Stats cards - mobile swipe */
 @media (max-width: 768px) {
-  .stats-grid {
+  .stats-scroll {
     display: flex;
+    gap: 12px;
     overflow-x: auto;
-    gap: 16px;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 10px;
+    scrollbar-width: none;
+    padding-bottom: 8px;
   }
 
-  .stats-grid::-webkit-scrollbar {
+  .stats-scroll::-webkit-scrollbar {
     display: none;
   }
 
-  .stats-grid > * {
-    flex: 0 0 85%;
+  .stats-scroll > * {
+    flex: 0 0 82%;
+    min-width: 0;
     scroll-snap-align: start;
   }
 }

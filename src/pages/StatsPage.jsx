@@ -20,7 +20,7 @@ export default function StatsPage() {
         <button className="stats-range-btn"><CalendarIcon /> 24h <ChevronDownSmall /></button>
       </div>
 
-      <div className="stat-cards-row">
+      <div className="stat-scroll">
         <StatCard icon={<DiamondStatIcon />} iconBg="rgba(139,92,246,0.15)" label="Total Volume" value="2,450.78 ETH" change="12.45%" positive sparkData={spark(10)} sparkColor="#a78bfa" />
         <StatCard icon={<BagIcon />} iconBg="rgba(59,130,246,0.15)" label="Total Sales" value="8,742" change="8.21%" positive sparkData={spark(20)} sparkColor="#60a5fa" />
         <StatCard icon={<UsersStatIcon />} iconBg="rgba(34,197,94,0.15)" label="Total Users" value="152,890" change="6.12%" positive sparkData={spark(15)} sparkColor="#4ade80" />
