@@ -1,6 +1,18 @@
 import { useState, useCallback } from 'react';
 import { BrowserProvider, Contract } from 'ethers';
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../contracts/contractInfo.js';
+import { MetaMaskSDK } from '@metamask/sdk';
+
+import {
+  CONTRACT_ADDRESS,
+  CONTRACT_ABI
+} from '../contracts/contractInfo.js';
+
+const MMSDK = new MetaMaskSDK({
+  dappMetadata: {
+    name: 'NFT Marketplace',
+    url: window.location.origin,
+  },
+});
 
 export default function useWallet() {
   const [account, setAccount] = useState(null);
@@ -10,29 +22,65 @@ export default function useWallet() {
 
   const connect = useCallback(async () => {
     setError(null);
-
-    if (!window.ethereum) {
-      setError('MetaMask is not installed.');
-      return;
-    }
-
     setConnecting(true);
+
     try {
-      const provider = new BrowserProvider(window.ethereum);
-      const accounts = await provider.send('eth_requestAccounts', []);
+      const ethereum = MMSDK.getProvider();
+
+      if (!ethereum) {
+        throw new Error('Unable to connect to MetaMask.');
+      }
+
+      // Make sure MetaMask is using Sepolia
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [
+          {
+            chainId: '0xaa36a7',
+          },
+        ],
+      });
+
+      const provider = new BrowserProvider(ethereum);
+
+      const accounts = await provider.send(
+        'eth_requestAccounts',
+        []
+      );
+
+      if (!accounts || accounts.length === 0) {
+        throw new Error('No wallet account found.');
+      }
+
       const signer = await provider.getSigner();
 
-      const nftContract = new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+      const nftContract = new Contract(
+        CONTRACT_ADDRESS,
+        CONTRACT_ABI,
+        signer
+      );
 
       setAccount(accounts[0]);
       setContract(nftContract);
+
     } catch (err) {
-      console.error(err);
-      setError('Failed to connect wallet.');
+      console.error('Wallet connection error:', err);
+
+      if (err.code === 4001) {
+        setError('You rejected the wallet connection.');
+      } else {
+        setError(err.message || 'Failed to connect wallet.');
+      }
     } finally {
       setConnecting(false);
     }
   }, []);
 
-  return { account, contract, connecting, error, connect };
+  return {
+    account,
+    contract,
+    connecting,
+    error,
+    connect,
+  };
 }
